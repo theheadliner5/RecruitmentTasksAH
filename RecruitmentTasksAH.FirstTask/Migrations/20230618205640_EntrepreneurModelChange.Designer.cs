@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RecruitmentTasksAH.FirstTask.Model;
 
@@ -10,9 +11,11 @@ using RecruitmentTasksAH.FirstTask.Model;
 namespace RecruitmentTasksAH.FirstTask.Migrations
 {
     [DbContext(typeof(EntrepreneurDbContext))]
-    partial class EntrepreneurDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230618205640_EntrepreneurModelChange")]
+    partial class EntrepreneurModelChange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,7 +43,7 @@ namespace RecruitmentTasksAH.FirstTask.Migrations
 
                     b.HasIndex("EntrepreneurId");
 
-                    b.ToTable("AccountNumbers");
+                    b.ToTable("AccountNumber");
                 });
 
             modelBuilder.Entity("RecruitmentTasksAH.FirstTask.Model.Entrepreneur", b =>

@@ -6,6 +6,7 @@ namespace RecruitmentTasksAH.FirstTask.Model
     {
         public DbSet<Entrepreneur> Entrepreneurs { get; set; }
         public DbSet<Representative> Representatives { get; set; }
+        public DbSet<AccountNumber> AccountNumbers { get; set; }
 
         public EntrepreneurDbContext(DbContextOptions<EntrepreneurDbContext> options) : base(options) { }
     }

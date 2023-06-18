@@ -11,7 +11,7 @@
         public string? StatusVat { get; set; }
         public string? Krs { get; set; }
         public string? RestorationBasis { get; set; }
-        public List<string> AccountNumbers { get; set; }
+        public List<AccountNumber> AccountNumbers { get; set; }
         public string? RegistrationDenialBasis { get; set; }
         public string? RemovalDate { get; set; }
         public string? Name { get; set; }

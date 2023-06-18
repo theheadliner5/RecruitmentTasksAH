@@ -1,26 +1,76 @@
 import React, { Component } from 'react';
 
 export class Home extends Component {
-  static displayName = Home.name;
+    static displayName = Home.name;
 
-  render() {
-    return (
-      <div>
-        <h1>Hello, world!</h1>
-        <p>Welcome to your new single-page application, built with:</p>
-        <ul>
-          <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>
-          <li><a href='https://facebook.github.io/react/'>React</a> for client-side code</li>
-          <li><a href='http://getbootstrap.com/'>Bootstrap</a> for layout and styling</li>
-        </ul>
-        <p>To help you get started, we have also set up:</p>
-        <ul>
-          <li><strong>Client-side navigation</strong>. For example, click <em>Counter</em> then <em>Back</em> to return here.</li>
-          <li><strong>Development server integration</strong>. In development mode, the development server from <code>create-react-app</code> runs in the background automatically, so your client-side resources are dynamically built on demand and the page refreshes when you modify any file.</li>
-          <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and your <code>dotnet publish</code> configuration produces minified, efficiently bundled JavaScript files.</li>
-        </ul>
-        <p>The <code>ClientApp</code> subdirectory is a standard React application based on the <code>create-react-app</code> template. If you open a command prompt in that directory, you can run <code>npm</code> commands such as <code>npm test</code> or <code>npm install</code>.</p>
-      </div>
-    );
-  }
+    constructor(props) {
+        super(props);
+        this.state = { entrepreneur: null, loading: true, nip: '' };
+
+        this.handleNipChange = this.handleNipChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleNipChange(event) {
+        this.setState({ nip: event.target.value });
+    }
+
+    async handleSubmit(event) {
+        event.preventDefault();
+        const response = await fetch(`entrepreneur/${this.state.nip}`);
+        const data = await response.json();
+        this.setState({ entrepreneur: data, loading: false });
+    }
+
+    static renderEntrepreneurTable(entrepreneur) {
+        return (            
+            <div>
+                <br />
+                <p><strong>Name:</strong> {entrepreneur.name}</p>
+                <p><strong>NIP:</strong> {entrepreneur.nip}</p>
+                <p><strong>Regon:</strong> {entrepreneur.regon}</p>
+                <p><strong>Restoration Date:</strong> {entrepreneur.restorationDate}</p>
+                <p><strong>Working Address:</strong> {entrepreneur.workingAddress}</p>
+                <p><strong>Has Virtual Accounts:</strong> {entrepreneur.hasVirtualAccounts.toString()}</p>
+                <p><strong>Status VAT:</strong> {entrepreneur.statusVat}</p>
+                <p><strong>KRS:</strong> {entrepreneur.krs}</p>
+                <p><strong>Restoration Basis:</strong> {entrepreneur.restorationBasis}</p>
+                <p><strong>Account Numbers:</strong></p>
+                <ul>
+                    {entrepreneur.accountNumbers && entrepreneur.accountNumbers.map((accountNumber, index) => (
+                        <li key={index}>{accountNumber.number}</li>
+                    ))}
+                </ul>
+                <p><strong>Registration Denial Basis:</strong> {entrepreneur.registrationDenialBasis}</p>
+                <p><strong>Removal Date:</strong> {entrepreneur.removalDate}</p>
+                <p><strong>Registration Legal Date:</strong> {entrepreneur.registrationLegalDate}</p>
+                <p><strong>Removal Basis:</strong> {entrepreneur.removalBasis}</p>
+                <p><strong>Pesel:</strong> {entrepreneur.pesel}</p>
+                <p><strong>Representatives:</strong></p>
+                <ul>
+                    {entrepreneur.representatives && entrepreneur.representatives.map((representative, index) => (
+                        <li key={index}>{representative.firstName} {representative.lastName}</li>
+                    ))}
+                </ul>
+                <p><strong>Residence Address:</strong> {entrepreneur.residenceAddress}</p>
+                <p><strong>Registration Denial Date:</strong> {entrepreneur.registrationDenialDate}</p>
+            </div>
+        );
+    }
+
+    render() {
+        let contents = this.state.loading
+            ? <p><em>Enter a NIP and press OK to load data...</em></p>
+            : Home.renderEntrepreneurTable(this.state.entrepreneur);
+
+        return (
+            <div>
+                <h1 id="tableLabel">Entrepreneur Data</h1>
+                <p>This component demonstrates fetching data from the server.</p>
+                <input type="text" value={this.state.nip} onChange={this.handleNipChange} />
+                <button onClick={this.handleSubmit}>OK</button>
+                {contents}
+            </div>
+        );
+    }
 }
