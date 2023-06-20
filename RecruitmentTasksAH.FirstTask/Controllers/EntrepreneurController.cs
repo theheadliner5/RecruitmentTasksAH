@@ -28,7 +28,7 @@ public class EntrepreneurController : ControllerBase
 
         if (entrepreneur is null)
         {
-            var response = await GetFromApi(nip);
+            var response = await GetEntrepreneurFromApi(nip);
 
             if (response.IsSuccessStatusCode)
             {
@@ -52,7 +52,7 @@ public class EntrepreneurController : ControllerBase
         return Ok(entrepreneur);
     }
 
-    private async Task<HttpResponseMessage> GetFromApi(string nip)
+    private async Task<HttpResponseMessage> GetEntrepreneurFromApi(string nip)
     {
         var request = new HttpRequestMessage(HttpMethod.Get,
             $"https://wl-api.mf.gov.pl/api/search/nip/{nip}?date={DateTime.Now:yyyy-MM-dd}");

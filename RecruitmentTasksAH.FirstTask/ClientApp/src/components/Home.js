@@ -66,7 +66,7 @@ export class Home extends Component {
         return (
             <div>
                 <h1 id="tableLabel">Entrepreneur Data</h1>
-                <p>This component demonstrates fetching data from the server.</p>
+                <p>This component fetches entrepreneur data from https://wl-api.mf.gov.pl/.</p>
                 <input type="text" value={this.state.nip} onChange={this.handleNipChange} />
                 <button onClick={this.handleSubmit}>OK</button>
                 {contents}
